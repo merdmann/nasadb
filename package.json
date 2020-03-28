@@ -1,0 +1,45 @@
+{
+    "name": "layout",
+    "version": "1.0.0",
+    "description": "css grid poject",
+    "main": "index.js",
+    "scripts": {
+        "test": "node_modules/.bin/cypress run --browser chrome",
+        "flow": "flow"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@babel/polyfill": "^7.8.7",
+        "@types/core-js": "^2.5.3",
+        "@types/jquery": "^3.3.32",
+        "grunt-contrib-qunit": "^3.1.0",
+        "grunt-contrib-watch": "^1.1.0",
+        "moment": "^2.24.0"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.8.4",
+        "@babel/core": "^7.8.7",
+        "@babel/preset-env": "^7.8.7",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.3",
+        "babel-preset-env": "^1.7.0",
+        "cypress": "^4.0.2",
+        "del": "^5.1.0",
+        "flow-bin": "^0.120.1",
+        "flow-remove-types": "^2.120.1",
+        "grunt": "^1.0.4",
+        "grunt-contrib-jshint": "^2.1.0",
+        "grunt-contrib-uglify": "^4.0.1",
+        "gulp": "^4.0.2",
+        "gulp-babel": "^7.0.1",
+        "gulp-clean-css": "^4.2.0",
+        "gulp-concat": "^2.6.1",
+        "gulp-less": "^4.0.1",
+        "gulp-rename": "^2.0.0",
+        "gulp-run": "^1.7.1",
+        "gulp-run-command": "0.0.10",
+        "gulp-uglify": "^3.0.2",
+        "typescript": "^3.7.5"
+    }
+}
