@@ -1,4 +1,3 @@
-export * from "../src/lib";
 
 export const API_KEY = "lPgKs6fcVeWbGp9jy8eP9P5vzOKoNarMtFLn9798";
 
@@ -7,9 +6,7 @@ export const API_KEY = "lPgKs6fcVeWbGp9jy8eP9P5vzOKoNarMtFLn9798";
  * @param {*} url
  */
 export function fetchData(url) {
-    const opts = { 'Content-Type': 'application/json' };
-
-    fetch(url + '?api_key=' + API_KEY, opts).then(function(response) {
+    fetch(url + '?api_key=' + API_KEY).then(function(response) {
             return response.json()
         })
         .then(function(myJson) {

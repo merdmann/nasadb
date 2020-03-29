@@ -1,19 +1,14 @@
+import { API_KEY, fetchData } from "../build/lib.js";
 
-export  *  from "../build/lib"
-
+console.log( "API Key: " + API_KEY ) 
 
 document.addEventListener('DOMContentLoaded', function () {
-
+  console.log("hml rendering done")
   interface dsInfo {
     dsname: string;
     url:    string;
   }
-  // running only after the html has been redered.
-  interface IArray {
-    [position: number]: dsInfo;
-  }
-
-  let dataSets: IArray = [{ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
+  let dataSets: Array<dsInfo> = [{ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
   { 'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY' },
   { 'dsname': 'Geomagnetic Storm (GST)', 'url': 'https://api.nasa.gov/DONKI/GST?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
   { 'dsname': 'Interplanetary Shock (IPS)', 'url': 'https://api.nasa.gov/DONKI/IPS?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&location=LOCATION&catalog=CATALOG&api_key=DEMO_KEY' },
@@ -37,9 +32,9 @@ document.addEventListener('DOMContentLoaded', function () {
     private datalist = <HTMLInputElement>document.getElementById("dataSetList")
 
     render() {
-      for (let ds of dataSets) {
-        console.log(ds.dsname)
-        this.datalist.innerHTML += `<button type="button class="btn btn-info">${ds.dsname}</button>`
+      for (let i = 0; i < dataSets.length; ++i) {
+        console.log(dataSets[i].dsname)
+        this.datalist.innerHTML += `<button type="button class="btn btn-info">${dataSets[i].dsname}</button>`
       }
     }
   }
