@@ -1,7 +1,7 @@
-import { API_KEY } from "../build/lib.js";
+import { API_KEY } from "./lib.js";
 console.log("API Key: " + API_KEY);
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("hml rendering done");
+    console.log("html rendering done");
     let dataSets = [{ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
         { 'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY' },
         { 'dsname': 'Geomagnetic Storm (GST)', 'url': 'https://api.nasa.gov/DONKI/GST?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
@@ -41,5 +41,5 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
     let ds = new Datasets();
-    new Facade(ds);
+    new Facade(ds).render();
 });
