@@ -1,14 +1,18 @@
-import { API_KEY, fetchData } from "./lib.js";
+import { API_KEY } from './lib.js';
 
 console.log( "API Key: " + API_KEY ) 
 
 document.addEventListener('DOMContentLoaded', function () {
-  console.log("html rendering done")
   interface dsInfo {
     dsname: string;
     url:    string;
   }
 
+  interface APOD {
+    url: string;
+    title: string;
+    explaination: string;
+  }
 
   let dataSets: Array<dsInfo> = [{ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
   { 'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY' },
@@ -23,11 +27,6 @@ document.addEventListener('DOMContentLoaded', function () {
   { 'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications?startDate=2014-05-01&endDate=2014-05-08&type=all&api_key=DEMO' }
   ]
 
-  class PictureOfTheDay {
-    render() {
-        
-    }
-  }
 
 
   class Datasets {
@@ -45,18 +44,67 @@ document.addEventListener('DOMContentLoaded', function () {
    * Facade Pattern implementation
    */
   class Facade {
-    private ds
+    private ds;
+    private pod;
 
-    constructor(ds: Datasets) {
+    constructor(ds: Datasets, pod:PictureOfTheDay ) {
       this.ds = ds;
+      this.pod = pod;
     }
 
     render() {
       this.ds.render();
+      this.pod.render();
+    }
+  }
+
+  class PictureOfTheDay {
+    private img_url;
+    private title;
+    private explain;
+       
+    constructor() {
+
+      async function api_get(url) {
+
+        const response = await fetch(url + "?api_key=" + API_KEY)
+        const body = await response.json();
+        return body;
+      }
+
+      let data  = api_get("https://api.nasa.gov/planetary/apod" );
+      console.log(data);
+
+      data.then((o) => {
+        this.img_url = o.url;
+        this.title = o.title;
+        this.explain = o.explanation;
+        this.render()
+      })
+      /*
+      this.img_url = data.url;
+      this.title = data.title;
+      this.explain = data.explaination;
+      */
+
+      console.log("url:" + this.img_url);
+      console.log("title:" + this.title);
+      console.log("explain:" + this.explain);
+
+    }
+
+    render() {
+      const datalist = <HTMLInputElement>document.getElementById("data-display");
+
+      datalist.innerHTML += `<h2>${this.title}<h2>
+                             <div>${this.explain}<div>` 
+      datalist.innerHTML += `<img src="${this.img_url}"></img>`;
+
     }
   }
 
   let ds = new Datasets();
-  new Facade(ds).render()
+  let pod = new PictureOfTheDay();
+  new Facade(ds, pod).render()
 
 })
