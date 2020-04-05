@@ -7,3 +7,8 @@ export const API_KEY = "lPgKs6fcVeWbGp9jy8eP9P5vzOKoNarMtFLn9798";
  * 
  * @param {*} url
  */
+export async function api_get(url : string) {
+  const response = await fetch(url + "?api_key=" + API_KEY)
+  const body = await response.json();
+  return body;
+}
