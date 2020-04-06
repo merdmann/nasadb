@@ -9,23 +9,18 @@ document.addEventListener('DOMContentLoaded', function () {
     url:    string;
   }
 
-  interface APOD {
-    url: string;
-    title: string;
-    explaination: string;
-  }
-
-  let dataSets: Array<dsInfo> = [{ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-  { 'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY' },
-  { 'dsname': 'Geomagnetic Storm (GST)', 'url': 'https://api.nasa.gov/DONKI/GST?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-  { 'dsname': 'Interplanetary Shock (IPS)', 'url': 'https://api.nasa.gov/DONKI/IPS?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&location=LOCATION&catalog=CATALOG&api_key=DEMO_KEY' },
-  { 'dsname': 'Solar Flare (FLR)', 'url': 'https://api.nasa.gov/DONKI/FLR?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-  { 'dsname': 'Solar Energetic Particle (SEP)', 'url': 'https://api.nasa.gov/DONKI/SEP?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-  { 'dsname': 'Magnetopause Crossing (MPC)', 'url': 'https://api.nasa.gov/DONKI/MPC?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-  { 'dsname': 'Radiation Belt Enhancement (RBE)', 'url': 'https://api.nasa.gov/DONKI/RBE?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-  { 'dsname': 'Hight Speed Stream (HSS)', 'url': 'https://api.nasa.gov/DONKI/HSS'},
-  { 'dsname': 'WSA+EnlilSimulation', 'url': 'https://api.nasa.gov/DONKI/WSAEnlilSimulations?startDate=2016-01-06&endDate=2016-01-06&api_key=DEMO_KEY' },
-  { 'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications' }
+  let dataSets: Array<dsInfo> = [
+  { /* 0 */   'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
+  { /* 1 */   'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY' },
+  { /* 2 */   'dsname': 'Geomagnetic Storm (GST)', 'url': 'https://api.nasa.gov/DONKI/GST?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
+  { /* 3 */   'dsname': 'Interplanetary Shock (IPS)', 'url': 'https://api.nasa.gov/DONKI/IPS?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&location=LOCATION&catalog=CATALOG&api_key=DEMO_KEY' },
+  { /* 4 */   'dsname': 'Solar Flare (FLR)', 'url': 'https://api.nasa.gov/DONKI/FLR?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
+  { /* 5 */   'dsname': 'Solar Energetic Particle (SEP)', 'url': 'https://api.nasa.gov/DONKI/SEP?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
+  { /* 6 */   'dsname': 'Magnetopause Crossing (MPC)', 'url': 'https://api.nasa.gov/DONKI/MPC?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
+  { /* 7 */   'dsname': 'Radiation Belt Enhancement (RBE)', 'url': 'https://api.nasa.gov/DONKI/RBE?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
+  { /* 8 */   'dsname': 'Hight Speed Stream (HSS)', 'url': 'https://api.nasa.gov/DONKI/HSS'},
+  { /* 9 */   'dsname': 'WSA+EnlilSimulation', 'url': 'https://api.nasa.gov/DONKI/WSAEnlilSimulations?startDate=2016-01-06&endDate=2016-01-06&api_key=DEMO_KEY' },
+  { /* 10 */  'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications' }
   ]
 
   async function api_get(url : string ) {
@@ -37,18 +32,33 @@ document.addEventListener('DOMContentLoaded', function () {
     return body;
   }
 
-  function handleClick(this, ev) {
+  function DumpReports(o) {
     let data=document.getElementById("data");
+
+    if( Array.isArray(o) ) {
+        for(let e of o) {
+          let message = e.messageBody.replace("##", "<br>");
+          data.innerHTML += `<div>${e.messageType} ${e.messageID} - <a href="${e.messageURL}">read more"</a - ${message}</div>`
+        }
+    }
+  }
+
+
+  function handleClick(this, ev) {
     let p = api_get(dataSets[this.id].url);
     p.then( (o) => {
-      console.log(o)
-      if( Array.isArray(o)) {
-        for(let e of o) {
-           let message = e.messageBody.replace("##", "<br>");
-           data.innerHTML += `<div>${e.messageType} ${e.messageID} - <a href="${e.messageURL}">read more"</a - ${message}</div>`
+      console.log( this.id )
+      switch(this.id) {
+        case 10: { /* Space weather notifications only */
+            DumpReports(o)
+            break;
+        }
+        default: {
+          console.log("Not handled " + this.id )
+          break;
         }
       }
-      })
+    })
   }
 
   /**
@@ -59,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log( "addDataSet("+ name + ", Id:"+ id + ",url" + link)
       const datalist = <HTMLInputElement>document.getElementById("dataSetList");
 
-      datalist.innerHTML += `<button id="${id}" type="button" class="btn btn-info">${name}</button>`
+      datalist.innerHTML += `<button id="${id}" type="button" class="buttons btn btn-info">${name}</button>`
       const Btn = document.getElementById("" + id);
 
       Btn.addEventListener('click', handleClick, true);
@@ -100,14 +110,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     constructor(title:string, url:string, explanation:string) {
 
-      let data  = api_get("https://api.nasa.gov/planetary/apod" );
-      console.log(data);
+    let data  = api_get("https://api.nasa.gov/planetary/apod" );
+    console.log(data);
 
-      data.then((o) => {
-        this.img_url = o.url;
-        this.title = o.title;
-        this.explain = o.explanation;
-        this.render()
+    data.then((o) => {
+      this.img_url = o.url;
+      this.title = o.title;
+      this.explain = o.explanation;
+      this.render()
       })
     }
 

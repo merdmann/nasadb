@@ -1,4 +1,7 @@
 /* a larger image codensing the weather into one image */
+.buttons {
+  margin: 10px 10px 10px
+}
 
 .dailySummary {
     width: 40%;
