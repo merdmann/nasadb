@@ -17,8 +17,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if( Array.isArray(o) ) {
         for(let e of o) {
+          console.log(e);
+
           let message = e.messageBody.replace("##", "<br>");
-          data.innerHTML += `<div>${e.messageType} ${e.messageID} - <a href="${e.messageURL}">read more"</a - ${message}</div>`
+          data.innerHTML += `<div class="message"><div class="${e.messageType}"> ${e.messageID}</div> - <a href="${e.messageURL}">read more"</a - ${message}</div><br>`
+
         }
     }
   }
@@ -37,6 +40,9 @@ document.addEventListener('DOMContentLoaded', function () {
   { /* 10 */  'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications', 'handler': DumpReports }
   ]
 
+  /**
+   * fetch data from the NASA open api datasets
+   */
   async function api_get(url : string ) {
     let query = url + "?api_key=" + API_KEY;
     console.log('api_get(' + query + ')')
@@ -46,8 +52,9 @@ document.addEventListener('DOMContentLoaded', function () {
     return body;
   }
 
-
-
+  /**
+  *  This is called every time a data set button is cliaked
+  */
   function handleClick(this, ev) {
     let p = api_get(dataSets[this.id].url);
     p.then( (o) => { dataSets[ this.id ].handler(o)} )
@@ -59,18 +66,19 @@ document.addEventListener('DOMContentLoaded', function () {
    */
   function addDataSet(name: string, id: number, link: string) {
       console.log( "addDataSet("+ name + ", Id:"+ id + ",url" + link)
-      const datalist = <HTMLInputElement>document.getElementById("dataSetList");
 
+      const datalist = <HTMLInputElement>document.getElementById("dataSetList");
       datalist.innerHTML += `<button id="${id}" type="button" class="buttons btn btn-info">${name}</button>`
       const Btn = document.getElementById("" + id);
 
-      Btn.addEventListener('click', handleClick, true);
+      Btn.addEventListener('click', handleClick, true)
   }
 
 
   class Datasets {
     /* this will put a a clicable element for each data set */
     render() {
+
       for (let i = 0; i < dataSets.length; ++i) {
          addDataSet(dataSets[i].dsname, i, dataSets[i].url);
       }

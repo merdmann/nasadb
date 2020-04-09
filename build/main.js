@@ -12,11 +12,13 @@ console.log("API Key: " + API_KEY);
 document.addEventListener('DOMContentLoaded', function () {
     /* Data handler fo space weather reports */
     function DumpReports(o) {
+        console.log("DumpReports");
         let data = document.getElementById("data");
         if (Array.isArray(o)) {
             for (let e of o) {
+                console.log(e);
                 let message = e.messageBody.replace("##", "<br>");
-                data.innerHTML += `<div>${e.messageType} ${e.messageID} - <a href="${e.messageURL}">read more"</a - ${message}</div>`;
+                data.innerHTML += `<div class="message"><div class="${e.messageType}"> ${e.messageID}</div> - <a href="${e.messageURL}">read more"</a - ${message}</div><br>`;
             }
         }
     }
@@ -33,6 +35,9 @@ document.addEventListener('DOMContentLoaded', function () {
         { /* 9 */ 'dsname': 'WSA+EnlilSimulation', 'url': 'https://api.nasa.gov/DONKI/WSAEnlilSimulations?startDate=2016-01-06&endDate=2016-01-06&api_key=DEMO_KEY', "handler": null },
         { /* 10 */ 'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications', 'handler': DumpReports }
     ];
+    /**
+     * fetch data from the NASA open api datasets
+     */
     function api_get(url) {
         return __awaiter(this, void 0, void 0, function* () {
             let query = url + "?api_key=" + API_KEY;
@@ -42,6 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
             return body;
         });
     }
+    /**
+    *  This is called every time a data set button is cliaked
+    */
     function handleClick(ev) {
         let p = api_get(dataSets[this.id].url);
         p.then((o) => { dataSets[this.id].handler(o); });

@@ -1,4 +1,19 @@
 /* a larger image codensing the weather into one image */
+.message {
+  color: white;
+  background-color: gray;
+  padding-left: 40px;
+  marging-bottom: 40px;
+}
+
+.RBE {
+  color: orange;
+}
+
+.Report {
+  color: red;
+}
+
 .buttons {
   margin: 10px 10px 10px
 }
