@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
     /* Data handler fo space weather reports */
     function DumpReports(o) {
         console.log("DumpReports");
-        let data = document.getElementById("data");
+        let data = document.getElementById("space-weather");
         if (Array.isArray(o)) {
             for (let e of o) {
                 console.log(e);
@@ -22,8 +22,16 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
+    function cme_handler(o) {
+        console.log("cme_handler" + o);
+        console.log(o);
+    }
+    function hss_handler(o) {
+        console.log("hss_handler");
+        console.log(o);
+    }
     let dataSets = [
-        { /* 0 */ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
+        { /* 0 */ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME', 'handler': cme_handler },
         { /* 1 */ 'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY', 'handler': null },
         { /* 2 */ 'dsname': 'Geomagnetic Storm (GST)', 'url': 'https://api.nasa.gov/DONKI/GST?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
         { /* 3 */ 'dsname': 'Interplanetary Shock (IPS)', 'url': 'https://api.nasa.gov/DONKI/IPS?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&location=LOCATION&catalog=CATALOG&api_key=DEMO_KEY', 'handler': null },
@@ -31,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { /* 5 */ 'dsname': 'Solar Energetic Particle (SEP)', 'url': 'https://api.nasa.gov/DONKI/SEP?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
         { /* 6 */ 'dsname': 'Magnetopause Crossing (MPC)', 'url': 'https://api.nasa.gov/DONKI/MPC?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
         { /* 7 */ 'dsname': 'Radiation Belt Enhancement (RBE)', 'url': 'https://api.nasa.gov/DONKI/RBE?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
-        { /* 8 */ 'dsname': 'Hight Speed Stream (HSS)', 'url': 'https://api.nasa.gov/DONKI/HSS', "handler": null },
+        { /* 8 */ 'dsname': 'Hight Speed Stream (HSS)', 'url': 'https://api.nasa.gov/DONKI/HSS', "handler": hss_handler },
         { /* 9 */ 'dsname': 'WSA+EnlilSimulation', 'url': 'https://api.nasa.gov/DONKI/WSAEnlilSimulations?startDate=2016-01-06&endDate=2016-01-06&api_key=DEMO_KEY', "handler": null },
         { /* 10 */ 'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications', 'handler': DumpReports }
     ];
@@ -51,6 +59,7 @@ document.addEventListener('DOMContentLoaded', function () {
     *  This is called every time a data set button is cliaked
     */
     function handleClick(ev) {
+        console.log("handeClick " + this.id);
         let p = api_get(dataSets[this.id].url);
         p.then((o) => { dataSets[this.id].handler(o); });
     }
@@ -58,19 +67,18 @@ document.addEventListener('DOMContentLoaded', function () {
      * PLace a botton wihe the name of the data set of the screen. if you clik the button the
      * dataset is downloaded.
      */
-    function addDataSet(name, id, link) {
-        console.log("addDataSet(" + name + ", Id:" + id + ",url" + link);
-        const datalist = document.getElementById("dataSetList");
-        datalist.innerHTML += `<button id="${id}" type="button" class="buttons btn btn-info">${name}</button>`;
-        const Btn = document.getElementById("" + id);
-        Btn.addEventListener('click', handleClick, true);
+    function AddButtom(id) {
+        const btn = document.getElementById(id);
+        let name = dataSets[id].dsname;
+        let url = dataSets[id].url;
+        btn.innerText = name;
+        /* datalist.innerHTML += `<button id="${id}" type="submit" class="h6 btn-block buttons btn btn-primary">${name}</button>`*/
+        btn.addEventListener('click', handleClick);
     }
     class Datasets {
-        /* this will put a a clicable element for each data set */
         render() {
-            for (let i = 0; i < dataSets.length; ++i) {
-                addDataSet(dataSets[i].dsname, i, dataSets[i].url);
-            }
+            for (let i = 0; i < dataSets.length; ++i)
+                AddButtom(i);
         }
     }
     /**
@@ -98,11 +106,11 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         }
         render() {
-            const datalist = document.getElementById("data-display");
+            const result = document.getElementById("apod");
             if (typeof this.title !== 'undefined') {
-                datalist.innerHTML += `<h2>${this.title}</h2>
-                              <div>${this.explain}</div>`;
-                datalist.innerHTML += `<img width="500px" src="${this.img_url}"></img>`;
+                result.innerHTML += `<h2>${this.title}</h2><div>
+                              ${this.explain}`;
+                result.innerHTML += `<img width="500px" src="${this.img_url}"></img></div>`;
             }
         }
     }

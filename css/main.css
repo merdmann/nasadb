@@ -7,15 +7,27 @@
 }
 
 .RBE {
-  color: orange;
+  color: white;
+  background-color: gray;
 }
 
 .Report {
-  color: red;
+  color: blue;
+  background-color: gray;
+}
+
+/*
+ * This flex box will contain the buttone to select containers
+ */
+.DatasetContainer {
+  display: flex;
+  border: 1px solid silver;
+  flex-direction: column;
 }
 
 .buttons {
-  margin: 10px 10px 10px
+  margin: 15px 5px
+  color: white;
 }
 
 .dailySummary {
@@ -55,6 +67,10 @@ body {
     margin: 0;
 }
 
+.topline {
+  margin-top: 0;
+}
+
 #pageHeader {
     grid-area: header;
 }
@@ -80,6 +96,6 @@ footer,
 article,
 nav,
 div {
-    padding: 20px;
+    padding: 5px;
     background: gold;
 }

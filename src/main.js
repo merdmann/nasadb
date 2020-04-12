@@ -35,24 +35,40 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var _this = this;
 Object.defineProperty(exports, "__esModule", { value: true });
 var lib_js_1 = require("./lib.js");
 console.log("API Key: " + lib_js_1.API_KEY);
 document.addEventListener('DOMContentLoaded', function () {
-    var _this = this;
+    /* Data handler fo space weather reports */
+    function DumpReports(o) {
+        console.log("DumpReports");
+        var data = document.getElementById("data");
+        if (Array.isArray(o)) {
+            for (var _i = 0, o_1 = o; _i < o_1.length; _i++) {
+                var e = o_1[_i];
+                console.log(e);
+                var message = e.messageBody.replace("##", "<br>");
+                data.innerHTML += "<div class=\"message\"><div class=\"" + e.messageType + "\"> " + e.messageID + "</div> - <a href=\"" + e.messageURL + "\">read more\"</a - " + message + "</div><br>";
+            }
+        }
+    }
     var dataSets = [
-        { /* 0 */ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-        { /* 1 */ 'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY' },
-        { /* 2 */ 'dsname': 'Geomagnetic Storm (GST)', 'url': 'https://api.nasa.gov/DONKI/GST?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-        { /* 3 */ 'dsname': 'Interplanetary Shock (IPS)', 'url': 'https://api.nasa.gov/DONKI/IPS?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&location=LOCATION&catalog=CATALOG&api_key=DEMO_KEY' },
-        { /* 4 */ 'dsname': 'Solar Flare (FLR)', 'url': 'https://api.nasa.gov/DONKI/FLR?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-        { /* 5 */ 'dsname': 'Solar Energetic Particle (SEP)', 'url': 'https://api.nasa.gov/DONKI/SEP?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-        { /* 6 */ 'dsname': 'Magnetopause Crossing (MPC)', 'url': 'https://api.nasa.gov/DONKI/MPC?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-        { /* 7 */ 'dsname': 'Radiation Belt Enhancement (RBE)', 'url': 'https://api.nasa.gov/DONKI/RBE?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY' },
-        { /* 8 */ 'dsname': 'Hight Speed Stream (HSS)', 'url': 'https://api.nasa.gov/DONKI/HSS' },
-        { /* 9 */ 'dsname': 'WSA+EnlilSimulation', 'url': 'https://api.nasa.gov/DONKI/WSAEnlilSimulations?startDate=2016-01-06&endDate=2016-01-06&api_key=DEMO_KEY' },
-        { /* 10 */ 'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications' }
+        { /* 0 */ 'dsname': 'Coronal Mass Ejection (CME)', 'url': 'https://api.nasa.gov/DONKI/CME?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
+        { /* 1 */ 'dsname': 'Coronal Mass Ejection (CME) Analysis', 'url': 'https://api.nasa.gov/DONKI/CMEAnalysis?startDate=2016-09-01&endDate=2016-09-30&mostAccurateOnly=true&speed=500&halfAngle=30&catalog=ALL&api_key=DEMO_KEY', 'handler': null },
+        { /* 2 */ 'dsname': 'Geomagnetic Storm (GST)', 'url': 'https://api.nasa.gov/DONKI/GST?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
+        { /* 3 */ 'dsname': 'Interplanetary Shock (IPS)', 'url': 'https://api.nasa.gov/DONKI/IPS?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&location=LOCATION&catalog=CATALOG&api_key=DEMO_KEY', 'handler': null },
+        { /* 4 */ 'dsname': 'Solar Flare (FLR)', 'url': 'https://api.nasa.gov/DONKI/FLR?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
+        { /* 5 */ 'dsname': 'Solar Energetic Particle (SEP)', 'url': 'https://api.nasa.gov/DONKI/SEP?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
+        { /* 6 */ 'dsname': 'Magnetopause Crossing (MPC)', 'url': 'https://api.nasa.gov/DONKI/MPC?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
+        { /* 7 */ 'dsname': 'Radiation Belt Enhancement (RBE)', 'url': 'https://api.nasa.gov/DONKI/RBE?startDate=yyyy-MM-dd&endDate=yyyy-MM-dd&api_key=DEMO_KEY', 'handler': null },
+        { /* 8 */ 'dsname': 'Hight Speed Stream (HSS)', 'url': 'https://api.nasa.gov/DONKI/HSS', "handler": null },
+        { /* 9 */ 'dsname': 'WSA+EnlilSimulation', 'url': 'https://api.nasa.gov/DONKI/WSAEnlilSimulations?startDate=2016-01-06&endDate=2016-01-06&api_key=DEMO_KEY', "handler": null },
+        { /* 10 */ 'dsname': 'Notifications', 'url': 'https://api.nasa.gov/DONKI/notifications', 'handler': DumpReports }
     ];
+    /**
+     * fetch data from the NASA open api datasets
+     */
     function api_get(url) {
         return __awaiter(this, void 0, void 0, function () {
             var query, response, body;
@@ -72,101 +88,81 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
-    function DumpReports(o) {
-        var data = document.getElementById("data");
-        if (Array.isArray(o)) {
-            for (var _i = 0, o_1 = o; _i < o_1.length; _i++) {
-                var e = o_1[_i];
-                var message = e.messageBody.replace("##", "<br>");
-                data.innerHTML += "<div>" + e.messageType + " " + e.messageID + " - <a href=\"" + e.messageURL + "\">read more\"</a - " + message + "</div>";
-            }
-        }
-    }
+    /**
+    *  This is called every time a data set button is cliaked
+    */
     function handleClick(ev) {
         var _this = this;
+        console.log("handeClick");
         var p = api_get(dataSets[this.id].url);
-        p.then(function (o) {
-            console.log(_this.id);
-            switch (_this.id) {
-                case 10: { /* Space weather notifications only */
-                    DumpReports(o);
-                    break;
-                }
-                default: {
-                    console.log("Not handled " + _this.id);
-                    break;
-                }
-            }
-        });
+        p.then(function (o) { dataSets[_this.id].handler(o); });
     }
     /**
      * PLace a botton wihe the name of the data set of the screen. if you clik the button the
      * dataset is downloaded.
      */
-    function addDataSet(name, id, link) {
-        console.log("addDataSet(" + name + ", Id:" + id + ",url" + link);
-        var datalist = document.getElementById("dataSetList");
-        datalist.innerHTML += "<button id=\"" + id + "\" type=\"button\" class=\"buttons btn btn-info\">" + name + "</button>";
-        var Btn = document.getElementById("" + id);
-        Btn.addEventListener('click', handleClick, true);
+    function AddButtom(id) {
+        var datalist = document.getElementById("DataSetList");
+        var name = dataSets[id].dsname;
+        var url = dataSets[id].url;
+        datalist.innerHTML += `<button id="${id}" type="button" class="h6 btn-block buttons btn btn-primary">${name}</button>`
+        var btn = document.getElementById(id);
+        btn.addEventListener('click', handleClick, true);
     }
     var Datasets = /** @class */ (function () {
         function Datasets() {
         }
         /* this will put a a clicable element for each data set */
         Datasets.prototype.render = function () {
-            for (var i = 0; i < dataSets.length; ++i) {
-                addDataSet(dataSets[i].dsname, i, dataSets[i].url);
-            }
+            /*    for (let i = 0; i < dataSets.length; ++i) {
+                  AddButtom( i ) */
         };
         return Datasets;
     }());
-    /**
-     * Facade Pattern implementation
-     */
-    var Facade = /** @class */ (function () {
-        function Facade(ds, pod) {
-            this.ds = ds;
-            this.pod = pod;
+}
+/**
+ * Facade Pattern implementation
+ */
+, /** @class */ (function () {
+    function Facade(ds, pod) {
+        this.ds = ds;
+        this.pod = pod;
+    }
+    Facade.prototype.render = function () {
+        this.ds.render();
+        this.pod.render();
+    };
+    return Facade;
+}()), /** @class */ (function () {
+    function PictureOfTheDay(title, url, explanation) {
+        var _this = this;
+        var data = api_get("https://api.nasa.gov/planetary/apod");
+        console.log(data);
+        data.then(function (o) {
+            _this.img_url = o.url;
+            _this.title = o.title;
+            _this.explain = o.explanation;
+            _this.render();
+        });
+    }
+    PictureOfTheDay.prototype.render = function () {
+        var datalist = document.getElementById("data-display");
+        if (typeof this.title !== 'undefined') {
+            datalist.innerHTML += "<h2>" + this.title + "</h2>\n                              <div>" + this.explain + "</div>";
+            datalist.innerHTML += "<img width=\"500px\" src=\"" + this.img_url + "\"></img>";
         }
-        Facade.prototype.render = function () {
-            this.ds.render();
-            this.pod.render();
-        };
-        return Facade;
-    }());
-    var PictureOfTheDay = /** @class */ (function () {
-        function PictureOfTheDay(title, url, explanation) {
-            var _this = this;
-            var data = api_get("https://api.nasa.gov/planetary/apod");
-            console.log(data);
-            data.then(function (o) {
-                _this.img_url = o.url;
-                _this.title = o.title;
-                _this.explain = o.explanation;
-                _this.render();
-            });
-        }
-        PictureOfTheDay.prototype.render = function () {
-            var datalist = document.getElementById("data-display");
-            if (typeof this.title !== 'undefined') {
-                datalist.innerHTML += "<h2>" + this.title + "</h2>\n                              <div>" + this.explain + "</div>";
-                datalist.innerHTML += "<img width=\"500px\" src=\"" + this.img_url + "\"></img>";
-            }
-        };
-        return PictureOfTheDay;
-    }());
-    var data = api_get("https://api.nasa.gov/planetary/apod");
-    console.log(data);
-    var facade;
-    data.then(function (o) {
-        var pod;
-        _this.img_url = o.url;
-        _this.title = o.title;
-        _this.explain = o.explanation;
-        pod = new PictureOfTheDay(o.title, o.url, o.explanation);
-        pod.render();
-        var ds = new Datasets();
-        facade = new Facade(ds, pod).render();
-    });
+    };
+    return PictureOfTheDay;
+}()), let, data = api_get("https://api.nasa.gov/planetary/apod"));
+console.log(data);
+var facade;
+data.then(function (o) {
+    var pod;
+    _this.img_url = o.url;
+    _this.title = o.title;
+    _this.explain = o.explanation;
+    pod = new PictureOfTheDay(o.title, o.url, o.explanation);
+    pod.render();
+    var ds = new Datasets();
+    facade = new Facade(ds, pod).render();
 });

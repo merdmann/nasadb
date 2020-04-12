@@ -15,13 +15,9 @@
     <header id="pageHeader">
         <input id="search-text" type="text" list="location-list" class="form-control" value="Dataset name" aria - label="large" aria - describedby="inputGroup-sizing-sm" placeholder="Dataset name">
         </input>
-        <span id="result"></span>
     </header>
 
     <article id="mainArticle">
-        <span id="data-display" width="600px" height="400px" class="container">
-            <!--this is  the space where the table goes -->
-        </span>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
         </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
@@ -31,18 +27,31 @@
         <script type="module" src="../build/lib.js"></script>
         <script type="module" src="../build/main.js"></script>
         <script src="https://d3js.org/d3.v5.min.js"></script>
-        <h2>Space Weather Notes</h2>
-        <div id="data">
+        <div class="topline" id="apod">
+        </div>
+        <div id="space-weather">
+          <h2>Space weather Notifications</h2>
         </div>
     </article>
 
     <nav id="mainNav">
-        <p>List of Datasets</p>
-        <div id="dataSetList"></div>
+      <h2>List of Datasets</h2>
+      <div class="DatasetContainer" id="DataSetList">
+        <button id="0" type="submit" class="h6 btn-block buttons btn btn-primary">0</button>
+        <button id="1" type="submit" class="h6 btn-block buttons btn btn-primary">1</button>
+        <button id="2" type="submit" class="h6 btn-block buttons btn btn-primary">2</button>
+        <button id="3" type="submit" class="h6 btn-block buttons btn btn-primary">3</button>
+        <button id="4" type="submit" class="h6 btn-block buttons btn btn-primary">4</button>
+        <button id="5" type="submit" class="h6 btn-block buttons btn btn-primary">5</button>
+        <button id="6" type="submit" class="h6 btn-block buttons btn btn-primary">6</button>
+        <button id="7" type="submit" class="h6 btn-block buttons btn btn-primary">7</button>
+        <button id="8" type="submit" class="h6 btn-block buttons btn btn-primary">8</button>
+        <button id="9" type="submit" class="h6 btn-block buttons btn btn-primary">9</button>
+        <button id="10" type="submit" class="h6 btn-block buttons btn btn-primary">10</button>
+      </div>
     </nav>
     <div id="siteAds">
-        <h1>NASA APIs</h1>
-        <h2></h2>
+        <h2>NASA APIs</h2>
         <p>
             <a href="https://api.nasa.gov/">https://api.nasa.gov/</a> as a data source
         </sp>
