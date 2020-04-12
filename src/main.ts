@@ -26,10 +26,12 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  /* Datahandler for corona mass ejection data */
   function cme_handler(o) {
     console.log("cme_handler" + o); console.log(o);
   }
   
+  /* Datahandler for high speed stream */
   function hss_handler(o) {
     console.log("hss_handler"); 
     console.log(o);
@@ -70,10 +72,10 @@ document.addEventListener('DOMContentLoaded', function () {
     p.then( (o) => { dataSets[ this.id ].handler(o)} )
   }
 
-
   /**
-   * PLace a botton wihe the name of the data set of the screen. if you clik the button the
-   * dataset is downloaded.
+   * PLace a botton wihe the name of the data set of the screen. if you click the button the
+   * dataset is downloaded. Before a dataset becomes visible make sure the that index.html 
+   * contains a dummy button. The Id should bb equal to the position in the dataSets aray.
    */
   function AddButtom( id ) {
     const btn = <HTMLInputElement>document.getElementById(id);
@@ -81,9 +83,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let url  = dataSets[id].url;
     
     btn.innerText = name;
-      
-    /* datalist.innerHTML += `<button id="${id}" type="submit" class="h6 btn-block buttons btn btn-primary">${name}</button>`*/
-
     btn.addEventListener( 'click', handleClick);
   }
 
